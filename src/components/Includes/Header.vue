@@ -47,13 +47,13 @@
               <button class="openNav box-shadow" onclick="openNav()"><img src="img/icon-hamburger.svg"></button>
               <ul>
                 <li><a href="#">Meldingen</a></li>
-                <li class="active"><router-link to="/nieuws">Nieuws</router-link></li>
-                <li><router-link to="/contact">Contact</router-link></li>
-                <li v-if="isAuth">
+                <li :class="currentRouteName === 'nieuws' ? 'active':''"><router-link to="/nieuws">Nieuws</router-link></li>
+                <li :class="currentRouteName === 'contact' ? 'active':''"><router-link to="/contact">Contact</router-link></li>
+                <li v-if="isAuth" :class="currentRouteName === 'account' ? 'active':''">
                   <router-link to="/account"><span>Profile</span></router-link>
                 </li>
-                <li v-else>
-                  <router-link to="/login"><span>Account</span></router-link>
+                <li v-else :class="currentRouteName === 'login' ? 'active':''">
+                  <router-link to="/login" ><span>Account</span></router-link>
                 </li>
                 <!--
                 <li><a href="#">
@@ -91,7 +91,14 @@ export default {
     return{
       isAuth: isAuth(),
     }
+  },
+
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    }
   }
+
 }
 </script>
 
