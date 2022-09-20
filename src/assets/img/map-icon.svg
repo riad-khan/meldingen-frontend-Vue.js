@@ -1,0 +1,9 @@
+<svg id="Icons_32px_Action_map-marker_4" data-name="Icons / 32px / Action / map-marker 4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="linear-gradient" y1="1" x2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fc2b4d"/>
+      <stop offset="1" stop-color="#fa673c"/>
+    </linearGradient>
+  </defs>
+  <path id="Vector" d="M9.333,12.667a3.333,3.333,0,1,1,1.276-.254,3.333,3.333,0,0,1-1.276.254ZM9.333,0A9.333,9.333,0,0,0,0,9.333c0,7,9.333,17.333,9.333,17.333s9.333-10.333,9.333-17.333A9.333,9.333,0,0,0,9.333,0Z" transform="translate(6.667 2.667)" fill="url(#linear-gradient)"/>
+</svg>
