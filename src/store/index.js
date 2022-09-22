@@ -1,10 +1,12 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import {newsStores} from "@/store/NewsStore/newsStore";
+import {PartnerBlogStore} from "@/store/PartnerBlogsStore/PartnerBlogStore";
+import {BlogStore} from "@/store/Blog/BlogStore";
+
+
 
 export default createStore({
   state: {
-    user:{
-      name:'riad',
-    }
   },
   getters: {
   },
@@ -13,5 +15,10 @@ export default createStore({
   actions: {
   },
   modules: {
+    newsStores,
+    PartnerBlogStore,
+    BlogStore,
   }
 })
+
+
