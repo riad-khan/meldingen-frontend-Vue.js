@@ -9,6 +9,8 @@ import PartnerBlogDetails from "@/components/Blogs/PartnerBlogDetails";
 import Blog from "@/components/Blogs/Blog";
 import BlogDetails from "@/components/Blogs/BlogDetails";
 import FilteredBlogs from "@/components/Blogs/FilteredBlogs";
+import NewsDetails from "@/components/Pages/NewsDetails";
+
 
 
 const routes = [
@@ -21,6 +23,11 @@ const routes = [
     path: '/nieuws',
     name:'nieuws',
     component: News,
+  },
+  {
+    path: '/nieuws/:stad/:provincie/:slug/:id',
+    name:'NewsDetails',
+    component: NewsDetails,
   },
   {
     path: '/login',

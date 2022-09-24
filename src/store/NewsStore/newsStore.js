@@ -5,6 +5,7 @@ export const newsStores = {
     state:{
         news:[],
         isLoading: false,
+        newsDetails : {},
     },
     mutations:{
         FETCH_NEWS(state, payload){
@@ -12,6 +13,9 @@ export const newsStores = {
         },
         CHANGE_ISLOADING(state,payload){
                 state.isLoading = payload
+        },
+        FETCH_NEWS_DETAILS (state,payload){
+            state.newsDetails = payload
         }
     },
     actions :{
@@ -23,6 +27,16 @@ export const newsStores = {
                     commit('CHANGE_ISLOADING',false)
                 })
 
+        },
+        newsDetails({commit},id){
+            commit('CHANGE_ISLOADING',true);
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/news/${id}`)
+                .then(response =>{
+                    commit('FETCH_NEWS_DETAILS',response.data)
+                })
+                .catch(error =>{
+                    console.log(error.response.data)
+                })
         }
     },
 

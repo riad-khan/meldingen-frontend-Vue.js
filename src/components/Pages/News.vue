@@ -104,7 +104,7 @@
                     <img class="img-thumb" src="img/news-thumb-156x132.png" alt="">
                   </div>
                   <div class="card-content">
-                    <h3 class="card-heading"><a href="">{{item.title}}</a></h3>
+                    <h3 class="card-heading"><router-link :to="'/nieuws/'+item.stad+'/'+item.provincie+'/'+item.slug+'/'+item.id">{{item.title}}</router-link></h3>
                     <div class="meta">
                       <ul class="inline-list">
                         <li><span class="icon-clock"></span> {{dateTime(item.timestamp)}} in &nbsp;</li>
