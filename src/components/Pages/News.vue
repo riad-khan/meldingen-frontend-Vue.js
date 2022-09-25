@@ -20,7 +20,7 @@
       <!--/ Location call to action section-->
       <section class="news-overview-sec">
         <div class="container">
-          <button class="news-list-btn" id="news-btn">Trending in <span class="primary-color">Nederland</span> <img src="img/icon-angle-down.svg" alt="" /></button>
+          <button class="news-list-btn" @click="toggleRegio" id="news-btn">Trending in <span class="primary-color">Nederland</span> <img src="../../assets/img/icon-angle-down.svg" alt="" /></button>
           <div class="row bg-white border-radius map-overlay" id="news-list">
             <div class="col-md-12">
               <h2 class="sec-heading">Kies je regio</h2>
@@ -101,10 +101,10 @@
                 <!--            News card start    -->
                 <div class="card other-news box-shadow border-radius-8 d-flex" v-for="item in news" :key="item.id">
                   <div class="news-thumb">
-                    <img class="img-thumb" src="img/news-thumb-156x132.png" alt="">
+                    <img class="img-thumb" :src="item.media" alt="">
                   </div>
                   <div class="card-content">
-                    <h3 class="card-heading"><router-link :to="'/nieuws/'+item.stad+'/'+item.provincie+'/'+item.slug+'/'+item.id">{{item.title}}</router-link></h3>
+                    <h3 class="card-heading"><router-link :to="'/nieuws/'+item.regio_url+'/'+item.provincie+'/'+item.slug+'/'+item.id">{{item.title}}</router-link></h3>
                     <div class="meta">
                       <ul class="inline-list">
                         <li><span class="icon-clock"></span> {{dateTime(item.timestamp)}} in &nbsp;</li>
@@ -293,6 +293,12 @@ data(){
     dateTime(value) {
           return moment.unix(value).format('hh:mm');
         },
+
+    toggleRegio(){
+        $("#news-list").slideToggle(500);
+        $(this).toggleClass("angle-up");
+        $("#widget_title").toggleClass("slideOpen",500);
+    }
   }
 
 }

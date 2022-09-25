@@ -98,11 +98,13 @@ $(document).ready(function(){
   });
 
   // news-list-hide/show for mobile
-  $("#news-btn").click(function(){
-    $("#news-list").slideToggle(500);
-    $(this).toggleClass("angle-up");
-    $("#widget_title").toggleClass("slideOpen",500);
-  });
+
+
+  // $("#news-btn").click(function(){
+  //   $("#news-list").slideToggle(500);
+  //   $(this).toggleClass("angle-up");
+  //   $("#widget_title").toggleClass("slideOpen",500);
+  // });
   // search form hide/show for mobile
   $("#form-btn").click(function(){
     $("#search-from").slideToggle(500);

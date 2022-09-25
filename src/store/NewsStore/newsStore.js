@@ -6,6 +6,7 @@ export const newsStores = {
         news:[],
         isLoading: false,
         newsDetails : {},
+        recentNews:[],
     },
     mutations:{
         FETCH_NEWS(state, payload){
@@ -16,6 +17,9 @@ export const newsStores = {
         },
         FETCH_NEWS_DETAILS (state,payload){
             state.newsDetails = payload
+        },
+        GET_RECENT(state, payload){
+            state.recentNews = payload
         }
     },
     actions :{
@@ -35,6 +39,16 @@ export const newsStores = {
                     commit('FETCH_NEWS_DETAILS',response.data)
                 })
                 .catch(error =>{
+                    console.log(error.response.data)
+                })
+        },
+        recentNews({commit}){
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/news/recent/news`)
+                .then((response)=>{
+                  commit('GET_RECENT',response.data)
+
+                })
+                .catch((error)=>{
                     console.log(error.response.data)
                 })
         }

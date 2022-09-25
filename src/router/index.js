@@ -25,7 +25,7 @@ const routes = [
     component: News,
   },
   {
-    path: '/nieuws/:stad/:provincie/:slug/:id',
+    path: '/nieuws/:regio/:provincie/:slug/:id',
     name:'NewsDetails',
     component: NewsDetails,
   },
