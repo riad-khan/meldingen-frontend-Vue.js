@@ -10,14 +10,18 @@ import Blog from "@/components/Blogs/Blog";
 import BlogDetails from "@/components/Blogs/BlogDetails";
 import FilteredBlogs from "@/components/Blogs/FilteredBlogs";
 import NewsDetails from "@/components/Pages/NewsDetails";
+import Statistics from "@/components/Statistics/Statistics";
+import FilteredNews from "@/components/Pages/FilteredNews";
+import Meldingen from "@/components/Meldingen/Meldingen";
+
 
 
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'meldingen',
+    component: Meldingen
   },
   {
     path: '/nieuws',
@@ -28,6 +32,12 @@ const routes = [
     path: '/nieuws/:regio/:provincie/:slug/:id',
     name:'NewsDetails',
     component: NewsDetails,
+  },
+  {
+    path: '/nieuws/:region',
+    name: 'filter-nieuws',
+    component: FilteredNews,
+
   },
   {
     path: '/login',
@@ -70,6 +80,11 @@ const routes = [
     component: BlogDetails,
 
   },
+  {
+    path: '/statistics',
+    name: 'statistics',
+    component: Statistics,
+  }
 
 ]
 

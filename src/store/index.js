@@ -3,6 +3,8 @@ import {newsStores} from "@/store/NewsStore/newsStore";
 import {PartnerBlogStore} from "@/store/PartnerBlogsStore/PartnerBlogStore";
 import {BlogStore} from "@/store/Blog/BlogStore";
 import {commentsStore} from "@/store/Comments/commentsStore";
+import {meldingenStore} from "@/store/Meldingen/meldingenStore";
+
 
 
 export default createStore({
@@ -18,7 +20,8 @@ export default createStore({
     newsStores,
     PartnerBlogStore,
     BlogStore,
-    commentsStore
+    commentsStore,
+    meldingenStore
   }
 })
 

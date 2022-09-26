@@ -7,6 +7,9 @@ export const newsStores = {
         isLoading: false,
         newsDetails : {},
         recentNews:[],
+        filteredNews : [],
+        regios:[],
+
     },
     mutations:{
         FETCH_NEWS(state, payload){
@@ -20,6 +23,13 @@ export const newsStores = {
         },
         GET_RECENT(state, payload){
             state.recentNews = payload
+        },
+        SET_FILTERED_NEWS(state,payload){
+            state.filteredNews = payload;
+
+        },
+        SET_REGIOS(state,payload){
+            state.regios = payload
         }
     },
     actions :{
@@ -47,6 +57,27 @@ export const newsStores = {
                 .then((response)=>{
                   commit('GET_RECENT',response.data)
 
+                })
+                .catch((error)=>{
+                    console.log(error.response.data)
+                })
+        },
+        filteredNews({commit},region){
+            commit('CHANGE_ISLOADING',true);
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/news/filter-news/${region}`)
+                .then((response)=>{
+                    commit('CHANGE_ISLOADING',false);
+                    commit('SET_FILTERED_NEWS',response.data)
+                })
+                .catch((error)=>{
+                    console.log(error.response.data)
+                })
+        },
+        fetchRegios({commit}){
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/news/fetch/regios`)
+                .then((response)=>{
+
+                    commit('SET_REGIOS',response.data)
                 })
                 .catch((error)=>{
                     console.log(error.response.data)

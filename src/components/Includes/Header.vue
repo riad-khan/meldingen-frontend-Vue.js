@@ -46,7 +46,7 @@
             <div class="menu">
               <button class="openNav box-shadow" onclick="openNav()"><img src="img/icon-hamburger.svg"></button>
               <ul>
-                <li><a href="#">Meldingen</a></li>
+                <li :class="currentRouteName === 'meldingen' ? 'active':''" ><router-link to="/">Meldingen</router-link></li>
                 <li :class="currentRouteName === 'nieuws' ? 'active':''"><router-link to="/nieuws">Nieuws</router-link></li>
                 <li :class="currentRouteName === 'contact' ? 'active':''"><router-link to="/contact">Contact</router-link></li>
                 <li v-if="isAuth" :class="currentRouteName === 'account' ? 'active':''">

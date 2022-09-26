@@ -1,94 +1,8 @@
 <template>
     <main class="main-content bg-lightgrey">
-      <!--Location call to action section-->
-      <section class="call-to-action">
-        <div class="container">
-          <div class="row d-flex align-items-center call-to-row box-shadow bg-white-gray">
-            <div class="col-md-8 col-xs-7">
-              <div class="location-search-form">
-                <input type="search" name="placename" placeholder="Zoek op plaatsnaam" />
-              </div>
-            </div>
-            <div class="col-md-4 col-xs-5">
-              <div class="call-to-link textright">
-                <button class="button text-locator"><span class="icon-search"></span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--/ Location call to action section-->
-      <section class="news-overview-sec">
-        <div class="container">
-          <button class="news-list-btn" @click="toggleRegio" id="news-btn">Trending in <span class="primary-color">Nederland</span> <img src="../../assets/img/icon-angle-down.svg" alt="" /></button>
-          <div class="row bg-white border-radius map-overlay" id="news-list">
-            <div class="col-md-12">
-              <h2 class="sec-heading">Kies je regio</h2>
-            </div>
-            <div class="col col-md-3">
-              <div class="news-list">
-                <ul>
-                  <li class="active"><a href="">Amsterdam</a></li>
-                  <li><a href="">Arnhem</a></li>
-                  <li><a href="">Bollenstreek</a></li>
-                  <li><a href="">Brabant-Noord</a></li>
-                  <li><a href="">Brabant-Zuid</a></li>
-                  <li><a href="">Drenthe</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col col-md-3">
-              <div class="news-list">
-                <ul>
-                  <li><a href="">Friesland</a></li>
-                  <li><a href="">Gelderland-Midden</a></li>
-                  <li><a href="">Gelderland-Zuid</a></li>
-                  <li><a href="">Gooi en Vechtstreek</a></li>
-                  <li><a href="">Haaglanden</a></li>
-                  <li><a href="">Hoeksche Waard</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col col-md-3">
-              <div class="news-list">
-                <ul>
-                  <li><a href="">Hollandse Midden</a></li>
-                  <li><a href="">Ijsseland</a></li>
-                  <li><a href="">Kennemersland</a></li>
-                  <li><a href="">Limburg-Zuid</a></li>
-                  <li><a href="">Midden en West</a></li>
-                  <li><a href="">Noord en Oost</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col col-md-3">
-              <div class="news-list">
-                <ul>
-                  <li><a href="">Noord-Holland</a></li>
-                  <li><a href="">Rotterdam-Rijnmond</a></li>
-                  <li><a href="">Twente</a></li>
-                  <li><a href="">Utrecht</a></li>
-                  <li><a href="">Zaandstad</a></li>
-                  <li><a href="">Zuid-Holland</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col col-md-3">
-              <div class="news-list">
-                <ul>
-                  <li><a href="">Flevoland</a></li>
-                  <li><a href="">Shoarmaland</a></li>
-                  <li><a href="">Zuud</a></li>
-                  <li><a href="">Apeldoorn</a></li>
-                  <li><a href="">Nijmegen</a></li>
-                  <li><a href="">Ijsseland</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--/ News Overview Section -->
+
+      <Location urlPath="nieuws" />
+      <RegioList region="Nederland" path="nieuws" />
 
 
       <!-- News Section-->
@@ -268,10 +182,14 @@
 <script>
 import {useStore} from 'vuex';
 import moment from 'moment';
+
+import Location from "@/components/Includes/Location";
+import RegioList from "@/components/Includes/RegioList";
 export default {
 
   name: "News",
-data(){
+  components: {RegioList, Location},
+  data(){
     return{
       image:{backgroundImage: `url(${require('../../assets/img/add-img.jpg')})`},
     }
@@ -294,11 +212,8 @@ data(){
           return moment.unix(value).format('hh:mm');
         },
 
-    toggleRegio(){
-        $("#news-list").slideToggle(500);
-        $(this).toggleClass("angle-up");
-        $("#widget_title").toggleClass("slideOpen",500);
-    }
+
+
   }
 
 }

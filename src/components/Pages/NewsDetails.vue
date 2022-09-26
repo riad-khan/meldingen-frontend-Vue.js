@@ -103,6 +103,10 @@
       <!-- comment Section Ends-->
 
           </div>
+
+
+
+
           <div class="col-md-4 col-lg-3 col-xs-12">
             <div class="sidebar">
               <h3 class="weight-500"> Ander Nieuws</h3>

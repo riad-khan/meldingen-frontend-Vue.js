@@ -28,6 +28,7 @@
               <li><a href="">Nieuws</a></li>
               <li><router-link to="/blogs">Blogs</router-link></li>
               <li><router-link to="/partnerbijdrage">Partnerbijdragen</router-link></li>
+              <li><router-link to="/statistics">Statistics</router-link></li>
               <li><a href="">Contact</a></li>
             </ul>
           </div>
