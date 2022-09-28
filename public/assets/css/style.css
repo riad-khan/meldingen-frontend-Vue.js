@@ -700,13 +700,22 @@ time {
 	background: var(--background-color);
 }
 
+.spin{
+    background-image: url(./Spinner-1s-200px.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .news-item .news-content {
-	padding-left: 100px;
-	width: 100%;
+    padding-left: 100px;
+    width: 100%;
+    position: relative;
 }
 
 .news-item img.news-icon {
 	position: absolute;
+    width: 70px;
+    top: 22px;
 }
 
 .news-content p.place {
@@ -717,6 +726,7 @@ time {
 
 .news-content p.place span {
 	display: block;
+    position: relative;
 }
 
 .news-content p.place span.place-title {

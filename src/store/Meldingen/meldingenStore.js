@@ -5,14 +5,20 @@ export const meldingenStore = {
     state:{
         meldingen:[],
         isLoading :false,
+        melDetails : {},
     },
     mutations:{
         SET_MELDINGEN(state,payload){
             state.meldingen = payload;
-            console.log(state.meldingen)
+
         },
         CHANGE_LOADING(state, payload) {
             state.isLoading = payload
+        },
+        MELDINGEN_DETAILS(state, payload){
+            state.melDetails = payload
+
+            console.log(state.melDetails)
         }
     },
     actions:{
@@ -25,6 +31,19 @@ export const meldingenStore = {
                 })
                 .catch((error)=>{
                     console.log(error.response.data)
+                })
+        },
+        meldingen_details({commit},id){
+            commit('CHANGE_LOADING',true);
+            axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/`+id)
+                .then(response=>{
+                    commit('MELDINGEN_DETAILS',response.data)
+                    setTimeout(()=>{
+                        commit('CHANGE_LOADING',false);
+                    },1000)
+                })
+                .catch(error=>{
+                    console.log(error)
                 })
         }
     },

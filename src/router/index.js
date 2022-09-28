@@ -13,7 +13,7 @@ import NewsDetails from "@/components/Pages/NewsDetails";
 import Statistics from "@/components/Statistics/Statistics";
 import FilteredNews from "@/components/Pages/FilteredNews";
 import Meldingen from "@/components/Meldingen/Meldingen";
-
+import MeldingenDetails from "@/components/Meldingen/MeldingenDetails";
 
 
 
@@ -22,6 +22,11 @@ const routes = [
     path: '/',
     name: 'meldingen',
     component: Meldingen
+  },
+  {
+      path: '/:provincie/:stad/:straat/:category/:id',
+      name:'MeldingenDetails',
+      component: MeldingenDetails,
   },
   {
     path: '/nieuws',
