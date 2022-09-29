@@ -61,6 +61,7 @@ import Location from "@/components/Includes/Location";
 import RegioList from "@/components/Includes/RegioList";
 import {useStore} from 'vuex'
 import moment from "moment/moment";
+import axios from "axios";
 import ambulance from '../../assets/img/ambulance.png';
 import politie from '../../assets/img/politie.png';
 import brandweer from '../../assets/img/brandweer.png';
@@ -76,26 +77,71 @@ export default {
         3: 'Geen spoed',
         4: 'Grote ingreep'
       },
+      meldingens:[],
+      increment:0,
 
 
     }
   },
   created() {
       const store = useStore();
-      store.dispatch('meldingenStore/fetchMeldingen');
+      // store.dispatch('meldingenStore/fetchMeldingen');
+    this.getMeldingen()
+
+
   },
 
+
+
+  mounted() {
+    this.getScroll()
+
+  },
   methods:{
     DateTime(value){
       return moment.unix(value,"MM-DD-YYYY").locale('nl').fromNow()
+    },
+    getMeldingen(){
+      axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/scroll-more/`+this.increment)
+          .then((response)=>{
+            response.data.map((item,i)=>{
+              this.meldingens.push(item)
+            })
+          })
+          .catch(error=>{
+            console.log(error)
+          })
+    },
+
+    getMoreMeldingen(page){
+      axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/scroll-more/`+page)
+          .then((response)=>{
+            response.data.map((item,i)=>{
+                this.meldingens.push(item)
+            })
+            console.log(this.increment)
+          })
+          .catch(error=>{
+            console.log(error)
+          })
+    },
+
+    getScroll(){
+      window.onscroll = () => {
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+
+        if (bottomOfWindow) {
+          this.getMoreMeldingen(this.increment++)
+        }
+      };
     }
   },
 
   computed:{
-      meldingens(){
-        const store = useStore();
-        return store.state.meldingenStore.meldingen
-      }
+      // meldingens(){
+      //   const store = useStore();
+      //   return store.state.meldingenStore.meldingen
+      // }
   }
 }
 </script>
