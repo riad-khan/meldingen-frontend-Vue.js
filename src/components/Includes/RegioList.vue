@@ -5,12 +5,16 @@
       <div class="row bg-white border-radius map-overlay" id="news-list">
         <div class="col-md-12">
           <h2 class="sec-heading">Kies je regio</h2>
+
+          {{path}}
         </div>
         <div class="col col-md-3" v-for="(item, i) in regios" :key="i">
           <div class="news-list">
             <ul>
               <li :class="region === item.regio ? 'active' : ''"><router-link :to="`/${path}/${item.regio_url}`" >{{item.regio}}</router-link></li>
 
+
+             
             </ul>
           </div>
         </div>

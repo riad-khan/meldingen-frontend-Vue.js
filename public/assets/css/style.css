@@ -22,6 +22,31 @@
   color: #fff;
   font-size: 12px;
 }
+
+.call-to-action .d-block {
+    display: block;
+    padding: 7px 15px;
+    font-size: 14px;
+}
+
+.call-to-action .d-block span {
+    float: right;
+    opacity: .5;
+}
+
+.call-to-action .d-block:first-child {
+    border-top: 1px solid #DFE2E6;
+}
+.call-to-action .d-block:hover {
+    background: rgba(166,185,201,0.1);
+}
+
+div#search_by_place_result {
+    background: var(--background-color);;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
 .theme-swapper .switch:after {
   content: "\e905";
   height: 100%;

@@ -14,7 +14,7 @@ import Statistics from "@/components/Statistics/Statistics";
 import FilteredNews from "@/components/Pages/FilteredNews";
 import Meldingen from "@/components/Meldingen/Meldingen";
 import MeldingenDetails from "@/components/Meldingen/MeldingenDetails";
-
+import FilterMeldingen from "@/components/Meldingen/FilterMeldingen";
 
 
 const routes = [
@@ -28,6 +28,12 @@ const routes = [
       name:'MeldingenDetails',
       component: MeldingenDetails,
   },
+  {
+    path: '/meldingen/:regio',
+    name: 'meldingen-filter',
+    component: FilterMeldingen,
+  },
+
   {
     path: '/nieuws',
     name:'nieuws',

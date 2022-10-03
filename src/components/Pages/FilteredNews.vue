@@ -1,9 +1,8 @@
 <template>
 
-  <Location />
+  <Location urlPath="nieuws" />
 
-  <RegioList :region="region" />
-
+  <RegioList :region="region" path="nieuws" />
   <!-- News Section-->
   <section class="news-archive sec-padding pt-0">
     <div class="container">

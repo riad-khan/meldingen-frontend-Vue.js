@@ -9,7 +9,8 @@
 
 
 
-        <div class="news-item box-shadow border-radius" v-for="(item,i) in meldingens" :key="i" style="margin: 10px;">
+        <div v-for="(item,i) in meldingens" :key="i">
+        <div data-aos="fade-up"  data-aos-delay="10" data-aos-once="true" class="news-item box-shadow border-radius"  style="margin: 10px;">
           <img :class="'news-icon'" v-if="item.dienst === 'ambulance'" src="../../assets/img/ambulance.png" >
           <img :class="'news-icon'" v-if="item.dienst === 'politie'" src="../../assets/img/politie.png" >
           <img :class="'news-icon'" v-if="item.dienst === 'brandweer'" src="../../assets/img/brandweer.png" >
@@ -46,7 +47,13 @@
 
             <span class="place-name"> {{item.straat}}</span> in  <span class="place-title" style="color: #669e97 !important;">{{ item.stad}} </span>,  <span class="place-name"> {{item.provincie}}</span>
           </div>
+
         </div>
+          <div v-if="i % 7 === 5" class="card card-img"><div class="news-item box-shadow border-radius news-ad-sec min-height-100" style="background-image: url(&quot;/img/add-img.0139dd0c.jpg&quot;);"><div class="news-content"><h2 class="new-ad-heading"> Dit is een placeholder voor reclame</h2></div></div></div>
+        </div>
+
+
+
 
 
       </div>
@@ -57,11 +64,15 @@
 </template>
 
 <script>
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import Location from "@/components/Includes/Location";
 import RegioList from "@/components/Includes/RegioList";
 import {useStore} from 'vuex'
 import moment from "moment/moment";
 import axios from "axios";
+
+
 import ambulance from '../../assets/img/ambulance.png';
 import politie from '../../assets/img/politie.png';
 import brandweer from '../../assets/img/brandweer.png';
@@ -87,8 +98,7 @@ export default {
       const store = useStore();
       // store.dispatch('meldingenStore/fetchMeldingen');
     this.getMeldingen()
-
-
+    AOS.init();
   },
 
 
@@ -105,6 +115,7 @@ export default {
       axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/scroll-more/`+this.increment)
           .then((response)=>{
             response.data.map((item,i)=>{
+              this.increment = 1;
               this.meldingens.push(item)
             })
           })
@@ -124,6 +135,7 @@ export default {
           .catch(error=>{
             console.log(error)
           })
+
     },
 
     getScroll(){
