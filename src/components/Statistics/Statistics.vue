@@ -18,11 +18,11 @@
                 <h4>Meldingen</h4>
               </strong>
               <p>Total of meldingen
-                <select name="datatablesSimple_length" id="meldingen">
-                  <option value="1">1 uur</option>
+                <select name="datatablesSimple_length" id="meldingen" @change="(e)=>changeMeldingenTime(e)">
+                  <option v-for="i in 24" selected :key="i" v-bind:value="i">{{i}} uur</option>
                 </select>
               </p>
-              <span id="mel_count">2689</span> <span id="meldingen_parcentage">-2%</span>
+              <span id="mel_count">0</span> <span id="meldingen_parcentage">0%</span>
 
               <div id="all_meldingen" class="">
                 <canvas id="myChart1" width="400" height="400"></canvas>
@@ -85,53 +85,24 @@
 <script>
 import { useStore } from 'vuex';
 import Chart from 'chart.js/auto';
+import axios from 'axios';
+
+
+
 
 export default {
   name: "Statistics.vue",
   components: {},
-
-
-  created() {
-    const store = useStore();
-    store.dispatch('newsStores/fetchRegios');
-   
-
-  },
-  computed: {
-    regios() {
-      const store = useStore();
-      return store.state.newsStores.regios
-    }
-  },
-  mounted() {
-    this.RegioChange('all');
-    this.meldingenChartRender()
-  },
-  methods: {
-    RegioChange(e) {
-      let regio;
-      if (e === 'all') {
-        regio = 'all'
-      } else {
-        regio = e.target.value;
-      }
-      
-    },
-    //meldingen Chart
-
-    meldingenChartRender() {
-      let myChart1 = null;
-      if (myChart1 != null) {
-        myChart1.destroy()
-      }
-      const ctx = document.getElementById('myChart1');
-      myChart1 = new Chart(ctx, {
+  data() {
+    return {
+      myChart1: null,
+      config1: {
         type: 'line',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: [],
           datasets: [{
-            label: '# of Votes',
-            data: [8, 19, 7, 5, 2, 3],
+            label: 'Totaal Meldingen',
+            data: [],
             backgroundColor: [
               'rgba(43,88,130,0.4)',
             ],
@@ -139,6 +110,7 @@ export default {
             pointRadius: 1,
             pointHoverRadius: 1,
             fill: true,
+            redraw:true,
             borderColor: [
               'rgba(31,65,96)',
 
@@ -183,8 +155,78 @@ export default {
             }
           }
         }
-      });
+      }
+    }
+  },
 
+
+  created() {
+    const store = useStore();
+    store.dispatch('newsStores/fetchRegios');
+
+
+  },
+  computed: {
+    regios() {
+      const store = useStore();
+      return store.state.newsStores.regios
+    }
+  },
+  mounted() {
+    this.RegioChange('all');
+
+
+  },
+  methods: {
+    RegioChange(e) {
+      let regio;
+      if (e === 'all') {
+        regio = 'all'
+      } else {
+        regio = e.target.value;
+      }
+      const defaultMeldingenTime = document.getElementById('meldingen').value;
+      this.fetchMeldingenChartData(defaultMeldingenTime, regio)
+
+
+    },
+    //meldingen Chart
+
+    meldingenChartRender() {
+      if (this.myChart1 != null) {
+        this.myChart1.destroy();
+      }
+      this.myChart1 = new Chart(
+        document.getElementById('myChart1'),
+        this.config1
+      );
+
+    },
+
+    changeMeldingenTime(e) {
+      const regio = document.getElementById('regio').value;
+      const hour = e.target.value;
+      this.fetchMeldingenChartData(hour, regio);
+    },
+
+    fetchMeldingenChartData(hour, regio) {
+      document.getElementById("all_meldingen").classList.add("spin");
+      axios.get(`${process.env.VUE_APP_BACKEND_URL}/charts/meldingen/${hour}/${regio}`)
+        .then((response) => {
+          this.config1.data.labels = [];
+          this.config1.data.datasets[0].data = [];
+
+          for (let i = 0; i < response.data.charts.length; i++) {
+            this.config1.data.labels.push((response.data.charts[i].time.length == 1 ? '0' : '') + response.data.charts[i].time);
+            this.config1.data.datasets[0].data.push(response.data.charts[i].calculated);
+          }
+
+          this.meldingenChartRender();
+
+          document.getElementById("all_meldingen").classList.remove("spin");
+          document.getElementById('mel_count').innerText = response.data.count;
+          document.getElementById('meldingen_parcentage').innerHTML = response.data.parcent + '%';
+        })
     }
 
   }
