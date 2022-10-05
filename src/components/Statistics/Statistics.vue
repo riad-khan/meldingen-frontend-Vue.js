@@ -188,6 +188,8 @@ export default {
       const defaultMeldingenTime = document.getElementById('meldingen').value;
       this.fetchMeldingenChartData(defaultMeldingenTime, regio)
 
+      console.log(regio)
+
 
     },
     //meldingen Chart
