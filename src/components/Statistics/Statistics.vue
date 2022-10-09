@@ -130,12 +130,12 @@
                     <div id="provincie_buttons_area" class="slides chart-btn" style="left: -660px;">
 
 
-                      <button v-for="(item, i) in provincie" :key="i" :id="item.provincie" @click="provincieSelect(item.provincie,i)" :class="index === i ?'provienci button active':'provienci button'" :value="item.provincie"
+                      <button v-for="(item, i) in provincieCount" :key="i" :id="item.provincie" @click="provincieSelect(item.provincie,i)" :class="index === i ?'provienci button active':'provienci button'" :value="item.provincie"
                         style="margin-left: 2px;margin-top: 3px;">
                        
                         <span style="vertical-align: inherit;">
                           <span style="vertical-align: inherit;"  >{{item.provincie}}</span>
-                        </span><span style="margin-left: 2px;display:block;span-size: 18px;">{{item.total}}</span>
+                        </span><span id="provincie_count"  style="margin-left: 2px;display:block;span-size: 18px;">{{item.total}}</span>
 
                       </button>
 
@@ -152,7 +152,7 @@
                 </div><br>
 
                 <div style="height: 300px" id="provincie_canvas" class="">
-                  <canvas id="myChart5" width="400" height="400"></canvas>
+                  <canvas id="myChart5" style="display: block; box-sizing: border-box; height: 300px; width: 683px;" width="683" height="300"></canvas>
                 </div>
               </div>
 
@@ -185,6 +185,7 @@ export default {
       myChart4: null,
       myChart5:null,
       provincie: [],
+      provincieCount:[],
       isLoading : false,
       defaultProvincie:'Noord-Brabant',
       index:0,
@@ -493,7 +494,7 @@ export default {
   },
 
 
-  beforeCreate() {
+  Created() {
     const store = useStore();
     store.dispatch('newsStores/fetchRegios');
     
@@ -501,20 +502,19 @@ export default {
   },
   computed: {
     regios() {
-
       const store = useStore();
       return store.state.newsStores.regios
+    },
+    provinCount(){
+        this.provincieCount.map((item)=>{
+            return item;
+        })
     }
   },
   mounted() {
     this.RegioChange('all');
-    axios.get(`${process.env.VUE_APP_BACKEND_URL}/charts/provincie`)
-      .then((response) => {
-        this.provincie = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data);
-      })
+    
+    
   },
   methods: {
     RegioChange(e) {
@@ -528,15 +528,22 @@ export default {
       const defaultAmbulanceTime = document.getElementById('select_ambulance').value;
       const defaultBrandweer = document.getElementById('select_brandweer').value;
       const defaultPolitie = document.getElementById('select_politie').value;
+      const provincieValue = document.getElementById('select_provincie').value;
       this.fetchMeldingenChartData(defaultMeldingenTime, regio);
       this.fetchAmbulanceMeldingen(defaultAmbulanceTime, regio);
       this.fetchBrandweerMeldingen(defaultBrandweer, regio);
       this.fetchPolitieMeldingen(defaultPolitie, regio);
-
-
-
-
-
+      this.fetchProvincie();
+      this.fetchProvincieMeldingen(provincieValue,this.defaultProvincie)
+    },
+    fetchProvincie(){
+       axios.get(`${process.env.VUE_APP_BACKEND_URL}/charts/provincie`)
+      .then((response) => {
+        this.provincie = response.data
+      })
+      .catch(error => {
+        console.log(error.response.data);
+      })
     },
     //meldingen Chart
 
@@ -571,6 +578,9 @@ export default {
           document.getElementById("all_meldingen").classList.remove("spin");
           document.getElementById('mel_count').innerText = response.data.count;
           document.getElementById('meldingen_parcentage').innerHTML = response.data.parcent + '%';
+        })
+        .catch(error =>{
+          console.log(error.response);
         })
     },
 
@@ -700,32 +710,28 @@ export default {
 
     fetchProvincieMeldingen(hour,provincie){
       this.isLoading = true;
-      document.getElementById("politie_meldingen").classList.add("spin");
+      document.getElementById("provincie_canvas").classList.add("spin");
       axios.get(`${process.env.VUE_APP_BACKEND_URL}/charts/prov/${hour}/${provincie}`)
         .then((response) => {
 
-          this.isLoading = false;
-          
           this.config5.data.labels = [];
           this.config5.data.datasets[0].data = [];
-
-         // console.log(response.data.charts);
-         let j=0;
           for (let i = 0; i < response.data.chart.length; i++) {
             this.config5.data.labels.push((response.data.chart[i].time.length == 1 ? '0' : '') + response.data.chart[i].time);
             this.config5.data.datasets[0].data.push(response.data.chart[i].calculated);
-            j++;
+           
           }
-
-          console.log(response.data.chart.length+' '+j);
-          console.log(this.config5.data.labels);
-          console.log(this.config5.data.datasets);
-
-          if(response.data.chart.length===j){
             this.provincieChartRender();
-          }
+            document.getElementById("provincie_canvas").classList.remove("spin");
+            this.provincieCount = response.data.hoursData
           
-          //fetchProvincieMeldingen();
+            this.provincie.map((item,i)=>{
+                this.provincieCount.map((data)=>{
+                    data.has
+                })
+            })
+         
+          
           
         })
 
