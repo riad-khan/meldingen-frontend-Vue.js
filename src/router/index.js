@@ -38,6 +38,7 @@ const routes = [
     path: '/nieuws',
     name:'nieuws',
     component: News,
+  
   },
   {
     path: '/nieuws/:regio/:provincie/:slug/:id',

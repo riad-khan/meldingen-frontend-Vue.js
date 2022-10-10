@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
+
         <h1>Statistieken
           <select @change="(e)=>RegioChange(e)" name="datatablesSimple_length" placeholder="Nederland" id="regio"
             class="sources">
@@ -119,7 +120,7 @@
                     <span style="vertical-align: inherit;">Total of the message
                     </span>
                   </span>
-                  
+
                   <select name="datatablesSimple_length" id="select_provincie" @change="(e)=>selectProvincieTime(e)">
                     <option v-for="i in 24" selected :key="i" v-bind:value="i">{{i}} uur</option>
                   </select>
@@ -130,12 +131,14 @@
                     <div id="provincie_buttons_area" class="slides chart-btn" style="left: -660px;">
 
 
-                      <button v-for="(item, i) in provincieCount" :key="i" :id="item.provincie" @click="provincieSelect(item.provincie,i)" :class="index === i ?'provienci button active':'provienci button'" :value="item.provincie"
+                      <button v-for="(item, i) in provincie" :key="i" :id="item.provincie"
+                        @click="provincieSelect(item.provincie,i)"
+                        :class="index === i ?'provienci button active':'provienci button'" :value="item.provincie"
                         style="margin-left: 2px;margin-top: 3px;">
-                       
-                        <span style="vertical-align: inherit;">
-                          <span style="vertical-align: inherit;"  >{{item.provincie}}</span>
-                        </span><span id="provincie_count"  style="margin-left: 2px;display:block;span-size: 18px;">{{item.total}}</span>
+
+
+                      
+                        
 
                       </button>
 
@@ -152,7 +155,8 @@
                 </div><br>
 
                 <div style="height: 300px" id="provincie_canvas" class="">
-                  <canvas id="myChart5" style="display: block; box-sizing: border-box; height: 300px; width: 683px;" width="683" height="300"></canvas>
+                  <canvas id="myChart5" style="display: block; box-sizing: border-box; height: 300px; width: 683px;"
+                    width="683" height="300"></canvas>
                 </div>
               </div>
 
@@ -183,12 +187,12 @@ export default {
       myChart2: null,
       myChart3: null,
       myChart4: null,
-      myChart5:null,
+      myChart5: null,
       provincie: [],
-      provincieCount:[],
-      isLoading : false,
-      defaultProvincie:'Noord-Brabant',
-      index:0,
+      provincieCount: [],
+      isLoading: false,
+      defaultProvincie: 'Noord-Brabant',
+      index: 0,
       config1: {
         type: 'line',
         data: {
@@ -452,6 +456,10 @@ export default {
           }]
         },
         options: {
+          animation: {
+            duration: 1,
+
+          },
           scales: {
             y: {
               display: false
@@ -485,36 +493,32 @@ export default {
               yAlign: 'bottom',
               displayColors: false,
 
-            }
+            },
+
           }
         }
       },
-     
+
     }
   },
 
 
-  Created() {
+  created() {
     const store = useStore();
     store.dispatch('newsStores/fetchRegios');
-    
-
   },
   computed: {
     regios() {
       const store = useStore();
       return store.state.newsStores.regios
     },
-    provinCount(){
-        this.provincieCount.map((item)=>{
-            return item;
-        })
+    provinCount() {
+      return this.provincieCount;
     }
   },
   mounted() {
     this.RegioChange('all');
-    
-    
+
   },
   methods: {
     RegioChange(e) {
@@ -529,21 +533,26 @@ export default {
       const defaultBrandweer = document.getElementById('select_brandweer').value;
       const defaultPolitie = document.getElementById('select_politie').value;
       const provincieValue = document.getElementById('select_provincie').value;
+      const btn = document.getElementsByClassName('provienci button active');
       this.fetchMeldingenChartData(defaultMeldingenTime, regio);
       this.fetchAmbulanceMeldingen(defaultAmbulanceTime, regio);
       this.fetchBrandweerMeldingen(defaultBrandweer, regio);
       this.fetchPolitieMeldingen(defaultPolitie, regio);
       this.fetchProvincie();
-      this.fetchProvincieMeldingen(provincieValue,this.defaultProvincie)
+      this.fetchProvincieMeldingen(provincieValue, this.defaultProvincie)
+
+    
+
     },
-    fetchProvincie(){
-       axios.get(`${process.env.VUE_APP_BACKEND_URL}/charts/provincie`)
-      .then((response) => {
-        this.provincie = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data);
-      })
+
+    fetchProvincie() {
+      axios.get(`${process.env.VUE_APP_BACKEND_URL}/charts/provincie`)
+        .then((response) => {
+          this.provincie = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data);
+        })
     },
     //meldingen Chart
 
@@ -579,7 +588,7 @@ export default {
           document.getElementById('mel_count').innerText = response.data.count;
           document.getElementById('meldingen_parcentage').innerHTML = response.data.parcent + '%';
         })
-        .catch(error =>{
+        .catch(error => {
           console.log(error.response);
         })
     },
@@ -688,15 +697,18 @@ export default {
     },
     //provincie charts
 
-    provincieSelect(provincie,i){
-        this.index = i;
-        const selectedValue = document.getElementById('select_provincie').value;
-        this.fetchProvincieMeldingen(selectedValue,provincie);
-
-
+    provincieSelect(provincie, i) {
+      this.index = i;
+      const selectedValue = document.getElementById('select_provincie').value;
+      this.fetchProvincieMeldingen(selectedValue, provincie);
     },
 
-   provincieChartRender() {
+    selectProvincieTime(e) {
+      const hour = e.target.value;
+      const btn = document.getElementsByClassName('provienci button active');
+      this.fetchProvincieMeldingen(hour, btn[0].value)
+    },
+    provincieChartRender() {
       if (this.myChart5 != null) {
         this.myChart5.destroy();
       }
@@ -706,10 +718,9 @@ export default {
       );
     },
 
-    
 
-    fetchProvincieMeldingen(hour,provincie){
-      this.isLoading = true;
+
+    fetchProvincieMeldingen(hour, provincie) {
       document.getElementById("provincie_canvas").classList.add("spin");
       axios.get(`${process.env.VUE_APP_BACKEND_URL}/charts/prov/${hour}/${provincie}`)
         .then((response) => {
@@ -719,20 +730,21 @@ export default {
           for (let i = 0; i < response.data.chart.length; i++) {
             this.config5.data.labels.push((response.data.chart[i].time.length == 1 ? '0' : '') + response.data.chart[i].time);
             this.config5.data.datasets[0].data.push(response.data.chart[i].calculated);
-           
           }
-            this.provincieChartRender();
-            document.getElementById("provincie_canvas").classList.remove("spin");
-            this.provincieCount = response.data.hoursData
-          
-            this.provincie.map((item,i)=>{
-                this.provincieCount.map((data)=>{
-                    data.has
-                })
-            })
-         
-          
-          
+
+        
+
+          this.provincieChartRender();
+          document.getElementById("provincie_canvas").classList.remove("spin");
+          for(let i =0; i < response.data.hoursData.length;i++){
+               // console.log(response.data.hoursData[i]["provincie"]);
+               let btnValue = document.getElementById(response.data.hoursData[i]["provincie"]).value;
+               const check = Object.values(response.data.hoursData[i]).includes(btnValue)
+                
+               document.getElementById(response.data.hoursData[i]["provincie"]).innerHTML = check === true ? ' <span style="vertical-align: inherit;" :id="item.provincie">'+btnValue+'</span>'+'<span id="provincie_count" style="margin-left: 2px;display:block;span-size: 18px;">'+response.data.hoursData[i]["total"]+'</span>' : ' <span style="vertical-align: inherit;" :id="item.provincie">'+btnValue+'</span>'+'<span id="provincie_count" style="margin-left: 2px;display:block;span-size: 18px;">'+0+'</span>';
+
+          }
+        
         })
 
     }
