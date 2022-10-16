@@ -1,19 +1,19 @@
 
 <template>
-    <Head>
+    <!-- <Head>
        <title>News Riad</title>
        <meta name="description" content="This page is dead">
-    <!-- Social -->
+   
     <meta property="og:title" content="Meldingen News">
     <meta property="og:description" content="Meldingen Site">
     <meta property="og:image" content="https://picsum.photos/1200/675">
 
-    <!-- Twitter -->
+   
     <meta name="twitter:title" content="Hello Title">
     <meta name="twitter:description" content="This page is awesome">
     <meta name="twitter:image" content="https://picsum.photos/1200/675">
     <meta name="twitter:card" content="summary_large_image">
-  </Head>
+  </Head> -->
 
   <main class="main-content bg-lightgrey">
 
@@ -207,31 +207,31 @@
 <script>
 import { useStore } from 'vuex';
 import moment from 'moment';
-import { Head } from '@vueuse/head'
+import { Head,useHead } from '@vueuse/head';
 
 import Location from "@/components/Includes/Location";
 import RegioList from "@/components/Includes/RegioList";
 import { reactive } from 'vue'
 export default {
-  // setup() {
-  //   const siteData = reactive({
-  //     title: "Meldingen News",
-  //     description: 'meldingen news',
-  //   })
+  setup() {
+    const siteData = reactive({
+      title: "Title from News",
+      description: 'News description',
+    })
 
-  //   useHead({
-  //     title: () => siteData.title,
-  //     meta: [
-  //       { name: 'description', content: () => siteData.description },
-  //       {
-  //         property: "og:locale:alternate",
-  //         content: "zh",
-  //         key: "zh",
-  //       },
-  //     ]
-  //   })
+    useHead({
+      title: () => siteData.title,
+      meta: [
+        { name: 'description', content: () => siteData.description },
+        {
+          property: "og:locale:alternate",
+          content: "zh",
+          key: "zh",
+        },
+      ]
+    })
 
-  // },
+  },
 
 
   name: "News",

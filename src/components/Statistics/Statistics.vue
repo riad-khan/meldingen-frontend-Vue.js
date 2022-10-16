@@ -136,7 +136,9 @@
                         :class="index === i ?'provienci button active':'provienci button'" :value="item.provincie"
                         style="margin-left: 2px;margin-top: 3px;">
 
-
+                        <span style="vertical-align: inherit;" >{{item.provincie}}
+                          <span style="margin-left: 2px;display:block;span-size: 18px;" :id="'provincie'+i"></span>
+                        </span>
                       
                         
 
@@ -739,9 +741,9 @@ export default {
           for(let i =0; i < response.data.hoursData.length;i++){
                // console.log(response.data.hoursData[i]["provincie"]);
                let btnValue = document.getElementById(response.data.hoursData[i]["provincie"]).value;
-               const check = Object.values(response.data.hoursData[i]).includes(btnValue)
+              // const check = Object.values(response.data.hoursData[i]).includes(btnValue)
                 
-               document.getElementById(response.data.hoursData[i]["provincie"]).innerHTML = check === true ? ' <span style="vertical-align: inherit;" :id="item.provincie">'+btnValue+'</span>'+'<span id="provincie_count" style="margin-left: 2px;display:block;span-size: 18px;">'+response.data.hoursData[i]["total"]+'</span>' : ' <span style="vertical-align: inherit;" :id="item.provincie">'+btnValue+'</span>'+'<span id="provincie_count" style="margin-left: 2px;display:block;span-size: 18px;">'+0+'</span>';
+      document.getElementById('provincie'+i).innerHTML = response.data.hoursData[i]["provincie"] === btnValue ? response.data.hoursData[i]["total"]: 0
 
           }
         
