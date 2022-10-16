@@ -11,6 +11,21 @@
                 <label>Password</label>
                 <input type="password" name="password" v-model="form.password" class="form-control">
                 <button type="submit" class="button " style="margin-top: 5px;margin-bottom: 5px;">Login</button>
+                
+             
+                      <a href="http://localhost:3000/auth/google" target="_blank" style="margin-left:8px;margin-top:2px;" class="button ">
+
+                        <img src="https://img.icons8.com/ios/18/000000/google-logo--v1.png"/>
+                        Sign in with Google
+                      </a>
+
+                      <a href="http://localhost:3000/auth/facebook" target="_blank" style="margin-left:8px;margin-top:2px;" class="button ">
+
+                        <img src="https://img.icons8.com/fluency/20/40C057/facebook-new.png"/>
+                        Sign in with Facebook
+                      </a>
+                  
+             
 
               </form>
             </div>
@@ -41,8 +56,24 @@ export default {
   created() {
     if(isAuth()){
       this.$router.push('nieuws');
-    }else{
-      this.$router.push('login');
+    }
+
+    if(this.$route.query.token){
+      const {name,email,id} = jwtDecode(this.$route.query.token);
+              localStorage.setItem('token',this.$route.query.token);
+              localStorage.setItem('name',name);
+              localStorage.setItem('email',email);
+              localStorage.setItem('id',id);
+
+              this.$swal({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              icon: 'success',
+              text: 'Logged In successful',
+            });
+            window.location.href = '/';
     }
   },
 

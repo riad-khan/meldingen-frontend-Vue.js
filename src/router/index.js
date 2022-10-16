@@ -51,6 +51,7 @@ const routes = [
     component: FilteredNews,
 
   },
+ 
   {
     path: '/login',
     name:'login',

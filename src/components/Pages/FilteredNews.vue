@@ -13,10 +13,10 @@
             <!--            News card start    -->
             <div class="card other-news box-shadow border-radius-8 d-flex" v-for="item in news" :key="item.id">
               <div class="news-thumb">
-                <img class="img-thumb" :src="item.media" alt="">
+                <img class="img-thumb" :src="img + item.image" alt="">
               </div>
               <div class="card-content">
-                <h3 class="card-heading"><router-link :to="'/nieuws/'+item.regio_url+'/'+item.provincie+'/'+item.slug+'/'+item.id">{{item.title}}</router-link></h3>
+                <h3 class="card-heading"><router-link :to="'/nieuws/'+item.regio_url+'/'+item.state+'/'+item.slug+'/'+item.id">{{item.title}}</router-link></h3>
                 <div class="meta">
                   <ul class="inline-list">
                     <li><span class="icon-clock"></span> {{dateTime(item.timestamp)}} in &nbsp;</li>
@@ -25,7 +25,7 @@
                   </ul>
                 </div>
                 <div class="btn-group">
-                  <a href="" class="button btn-more bg-blue border-radius-8">Ambulance</a>
+                  <a href="" class="button btn-more bg-blue border-radius-8">{{item.tags}}</a>
                   <a href="" class="button btn-more bg-btngrey border-radius-8">Verkeer</a>
                 </div>
               </div>
@@ -188,6 +188,7 @@ export default {
   data(){
     return{
       image:{backgroundImage: `url(${require('../../assets/img/add-img.jpg')})`},
+      img: process.env.VUE_APP_LARAVEL_URL,
       region: ''
     }
   },
@@ -199,7 +200,7 @@ export default {
   },
   methods:{
     dateTime(value) {
-      return moment.unix(value).format('hh:mm');
+      return moment(value).format('hh:mm');
     },
   },
 
