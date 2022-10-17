@@ -15,6 +15,9 @@ import FilteredNews from "@/components/Pages/FilteredNews";
 import Meldingen from "@/components/Meldingen/Meldingen";
 import MeldingenDetails from "@/components/Meldingen/MeldingenDetails";
 import FilterMeldingen from "@/components/Meldingen/FilterMeldingen";
+import Dashboard from "@/components/Dashboard/Dashboard";
+import EditProfile from "@/components/Dashboard/Edit-Profile";
+
 
 
 const routes = [
@@ -97,6 +100,16 @@ const routes = [
     path: '/statistics',
     name: 'statistics',
     component: Statistics,
+  },
+  {
+    path:'/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+  },
+  {
+    path:'/edit-profile',
+    name:'edit_profile',
+    component: EditProfile,
   }
 
 ]

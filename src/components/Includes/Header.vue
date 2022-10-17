@@ -50,7 +50,7 @@
                 <li :class="currentRouteName === 'nieuws' ? 'active':''"><router-link to="/nieuws">Nieuws</router-link></li>
                 <li :class="currentRouteName === 'contact' ? 'active':''"><router-link to="/contact">Contact</router-link></li>
                 <li v-if="isAuth" :class="currentRouteName === 'account' ? 'active':''">
-                  <router-link to="/account"><span>Profile</span></router-link>
+                  <router-link to="/dashboard"><span>Profile</span></router-link>
                 </li>
                 <li v-else :class="currentRouteName === 'login' ? 'active':''">
                   <router-link to="/login" ><span>Account</span></router-link>
