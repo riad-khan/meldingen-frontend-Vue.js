@@ -725,6 +725,14 @@ span.input-icon.map-icon img {
 	transition: (----transition-delay);
 }
 
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table-bordered td, .table-bordered th {
+    border: 1px solid #dee2e6;
+}
 .custom-option:first-of-type {
 	border-radius: 4px 4px 0 0;
 }

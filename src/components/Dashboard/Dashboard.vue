@@ -40,9 +40,16 @@
 
 <script>
 import DashboardLinks from "@/components/Dashboard/Dashboard-links";
+import {isAuth} from "@/helpers/auth";
 export default {
   name: "Dashboard.vue",
-  components: {DashboardLinks}
+  components: {DashboardLinks},
+
+  created() {
+    if(!isAuth()){
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 

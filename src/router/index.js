@@ -17,6 +17,7 @@ import MeldingenDetails from "@/components/Meldingen/MeldingenDetails";
 import FilterMeldingen from "@/components/Meldingen/FilterMeldingen";
 import Dashboard from "@/components/Dashboard/Dashboard";
 import EditProfile from "@/components/Dashboard/Edit-Profile";
+import React from "@/components/Dashboard/React";
 
 
 
@@ -110,6 +111,11 @@ const routes = [
     path:'/edit-profile',
     name:'edit_profile',
     component: EditProfile,
+  },
+  {
+    path:'/my-reacties',
+    name:'react',
+    component: React
   }
 
 ]

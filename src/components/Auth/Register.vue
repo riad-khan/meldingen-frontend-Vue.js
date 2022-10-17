@@ -43,8 +43,6 @@ export default {
   created() {
     if(isAuth()){
       this.$router.push('nieuws');
-    }else{
-      this.$router.push('login');
     }
   },
   methods:{

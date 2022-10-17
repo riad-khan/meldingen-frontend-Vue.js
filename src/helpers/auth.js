@@ -10,6 +10,9 @@ export const isAuth = () =>{
         return false
     }
 }
+
 export const userInfo = () =>{
+    const{name, email} = jwtDecode(localStorage.getItem('token'));
+    return {name, email};
 
 }

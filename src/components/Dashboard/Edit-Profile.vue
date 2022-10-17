@@ -11,22 +11,26 @@
               <div class="mac-content">
                 <div class="row">
                   <div class="col-md-12">
-                    <form method="post" action="/update-account" class="edit-profile">
-                      <input type="hidden" name="_token" value="Bg6aCMNYLAKWNeRan1JpVdaeRudECVEocdmOw3yl">            <h4>Edit profile</h4>
+
+                    <div v-if="isLoading === true" style="height: 300px;" :class="isLoading ? 'spin':''"></div>
+
+                    <form v-else method="post" action="">
+                      <h4>Edit profile</h4>
                       <div class="form-group">
-                        <input id="name" value="Admin" type="text" name="name" placeholder="Name *" required autocomplete="off">
+                        <input id="name"  v-model="formData.name" type="text" name="name" placeholder="Name *" required autocomplete="off">
                       </div>
                       <div class="form-group">
-                        <input id="email" value="admin@admin.com" type="text" readonly placeholder="Email *" required autocomplete="off">
+                        <input id="email" :value="formData.email" type="text" readonly placeholder="Email *" required autocomplete="off">
                       </div>
                       <div class="form-group">
-                        <input id="password1" name="password" value="" type="text" placeholder="Password" autocomplete="off">
+                        <input id="password1" name="password" v-model="formData.password"  type="text" placeholder="Password" autocomplete="off">
                       </div>
                       <div class="form-group">
-                        Disable Recaptcha? <input id="captcha" name="captcha" value="1" type="checkbox" >
+                        Disable Recaptcha? <input id="captcha" name="captcha" v-model="formData.captcha"  type="checkbox" >
+                        {{formData.captcha}}
                       </div>
                       <div class="btn-submit mb-3">
-                        <button class="button btn-sumit btn-full mt-10" type="submit">Update</button>
+                        <button class="button btn-sumit btn-full mt-10" @click.prevent="updateProfile">Update</button>
                       </div>
                     </form>
                   </div>
@@ -43,19 +47,58 @@
 
 <script>
 import {useStore} from "vuex";
-import AOS from "aos";
 
+import AOS from "aos";
 import 'aos/dist/aos.css';
 import DashboardLinks from "@/components/Dashboard/Dashboard-links";
+import {isAuth, userInfo} from "@/helpers/auth";
+import axios from "axios";
 
 export default {
   name: "Edit-Profile.vue",
   components: {DashboardLinks},
+  data(){
+      return{
+        isLoading : false,
+        formData:{
+          name: userInfo().name,
+          email : userInfo().email,
+          password : '',
+          captcha: false,
+          id: localStorage.getItem('id'),
+
+        }
+      }
+  },
   created() {
+
+    if(!isAuth()){
+      this.$router.push('/login')
+    }
     AOS.init();
+
   },
   methods:{
-    
+    updateProfile(){
+      this.isLoading = true;
+     setTimeout(()=>{
+       axios.post(`${process.env.VUE_APP_BACKEND_URL}/user/update/profile`,this.formData,{
+         headers: {
+           "Content-type": "application/json",
+           "Authorization": `Bearer ${localStorage.getItem('token')}`
+         }
+       })
+           .then((response)=>{
+             localStorage.removeItem('token');
+             this.isLoading = false;
+             localStorage.setItem('token',response.data.token)
+           })
+           .catch((error)=>{
+             console.log(error)
+           })
+     },1000)
+
+    }
   }
 }
 </script>
