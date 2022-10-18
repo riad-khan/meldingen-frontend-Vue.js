@@ -2,26 +2,22 @@
   <location urlPath="meldingen" />
   <RegioList region="Nederland" path="meldingen" />
 
+
   <div class="container">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-12 meldingen_div">
 
 
+        <div v-if="isLoading === true" style="height: 300px;" :class="isLoading ? 'spin':''"></div>
 
 
-        <div v-for="(item,i) in meldingens" :key="i">
+        <div v-else v-for="(item,i) in meldingens" :key="i">
           <div data-aos="fade-up" data-aos-delay="10" data-aos-once="true" class="news-item box-shadow border-radius"
             style="margin: 10px;">
-            <img :class="'news-icon'" v-if="item.dienst === 'ambulance'" src="../../assets/img/ambulance.png">
-            <img :class="'news-icon'" v-if="item.dienst === 'politie'" src="../../assets/img/politie.png">
-            <img :class="'news-icon'" v-if="item.dienst === 'brandweer'" src="../../assets/img/brandweer.png">
-            <img :class="'news-icon'" v-if="item.dienst === 'kustwacht'" src="../../assets/img/kustwacht.png">
+            <img :class="'news-icon'" :src="require(`@/assets/img/${item.dienst}.png`)">
 
 
             <div class="news-content">
-
-
-
               <h2>
                 <router-link
                   :to="'/'+item.provincie+'/'+item.stad_url+'/'+item.straat_url+'/'+item.categorie_url+'/'+item.id">
@@ -32,7 +28,7 @@
 
                 <span class="place-name" style="bottom: 33px;">{{DateTime(item.timestamp)}}</span>
 
-                <span class="place-name"
+                <span class="place-name text-center"
                   style="background-color: #e05b59;color: white;bottom: 14px;font-size: 14px;padding: 3px 5px;border-radius:4px"
                   v-if="item.prio === 1">{{prio["1"]}}
                 </span>
@@ -64,6 +60,9 @@
               </div>
             </div>
           </div>
+
+          <div v-if="loadingMore === true" style="height: 300px;" :class="loadingMore ? 'spin':''"></div>
+
         </div>
 
 
@@ -85,13 +84,54 @@ import RegioList from "@/components/Includes/RegioList";
 import { useStore } from 'vuex'
 import moment from "moment/moment";
 import axios from "axios";
-
-
-import ambulance from '../../assets/img/ambulance.png';
-import politie from '../../assets/img/politie.png';
-import brandweer from '../../assets/img/brandweer.png';
-import kustwacht from '../../assets/img/kustwacht.png';
+import { useHead } from '@vueuse/head';
+import { reactive } from 'vue';
+let test ='';
 export default {
+
+  setup() {
+    const store = useStore();
+    store.dispatch('meldingenStore/fetchMeldingen');
+    console.log(store);
+    let siteData = reactive({
+      title:'',
+      description: '',
+      keywords:''
+    });
+    test ="bla bla";
+    axios.get(`${process.env.VUE_APP_BACKEND_URL}/seo-data/Home`)
+      .then((response) => {
+          siteData.title = response.data.title;
+          siteData.description = response.data.seo_meta;
+          siteData.keywords = response.data.seo_keywords;
+      })
+    useHead({
+      title: () => test,
+      meta: [
+        { name: 'description', content: () => siteData.description },
+        { name: 'keywords', content: () => siteData.keywords },
+        {
+          property: "og:title",
+          content: () => siteData.title,
+        },
+        {
+          property: "og:description",
+          content: () => siteData.description,
+        },
+        {
+          property: "twitter:title",
+          content: () => siteData.title,
+        },
+        {
+          property: "twitter:description",
+          content: () => siteData.description,
+        },
+       
+      ]
+    })
+
+  },
+
   name: "Meldingen",
   components: { RegioList, Location },
   data() {
@@ -102,74 +142,88 @@ export default {
         3: 'Geen spoed',
         4: 'Grote ingreep'
       },
-      nexReq: null,
+      title: 'ok',
+      nexReq: false,
       meldingens: [],
       increment: 0,
+      isLoading: false,
+      loadingMore: false,
 
 
     }
   },
-  created() {
+
+  mounted() {
+    
+    window.addEventListener('scroll', this.handleScroll)
     const store = useStore();
     // store.dispatch('meldingenStore/fetchMeldingen');
     this.getMeldingen()
     AOS.init();
-  },
+    //document.getElementById("testmeta").setAttribute("description","Bla Bla Bla");
+    //console.log(document.getElementsByTagName("title"));
 
+      this.title = test
 
-
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
+
     DateTime(value) {
       return moment.unix(value, "MM-DD-YYYY").locale('nl').fromNow()
     },
     getMeldingen() {
+      this.isLoading = true;
+
       axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/scroll-more/` + this.increment)
         .then((response) => {
           response.data.map((item, i) => {
             this.increment = 1;
             this.meldingens.push(item)
-
+            this.isLoading = false
           })
         })
         .catch(error => {
           console.log(error)
         })
+
     },
 
     getMoreMeldingen(page) {
-      this.nexReq === true;
+      this.nexReq = true;
+      this.loadingMore = true;
+
       axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/scroll-more/` + page)
         .then((response) => {
+          this.nexReq = false;
           response.data.map((item, i) => {
+
             this.meldingens.push(item)
-            this.nexReq = false;
+            this.loadingMore = false;
           })
 
         })
         .catch(error => {
           console.log(error)
         })
+
+
+
+
 
     },
     handleScroll() {
       if ((Math.round(window.scrollY) + window.innerHeight) >= document.body.scrollHeight) {
-        if (!this.nexReq) {
+
+
+        if (this.nexReq === false) {
           this.getMoreMeldingen(this.increment++);
         }
+
       }
 
     }
   },
 
-  computed: {
-    // meldingens(){
-    //   const store = useStore();
-    //   return store.state.meldingenStore.meldingen
-    // }
-  }
 }
 </script>
 

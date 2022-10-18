@@ -840,6 +840,18 @@ time {
     background-position: center;
 }
 
+.rolling-spin::before{
+  background-image: url(./Rolling-1s-23px.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  content: " ";
+  padding: 10px;
+}
+
+.meldingen_div{
+    min-height: 400px;
+}
+
 .news-item .news-content {
     padding-left: 100px;
     width: 100%;

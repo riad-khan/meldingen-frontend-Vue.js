@@ -50,7 +50,7 @@
                     <div class="reacties d-flex align-items-center text-right">
                       <div class="heart-icon-area">
 
-                        
+
 
                         <div class="heart-icon-area">
                           <svg id="svg_unfill" data-id="265" onclick="my_fav(this)" class="svg unfill active"
@@ -71,7 +71,7 @@
 
                       </div>
                       <button class="button btn-tranparent text-dark-white"><span class="icon-user-hear"></span>
-                        {{comments.length}} reacties</button>
+                        reacties</button>
                     </div>
                   </div>
 
@@ -233,9 +233,9 @@ export default {
   },
   mounted() {
     const id = this.$route.params.id
-    this.getComments(id)
-
-
+    if (isAuth()) {
+      this.getComments(id)
+    }
   },
   computed: {
     newsDetails() {

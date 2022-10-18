@@ -17,8 +17,6 @@ export const meldingenStore = {
         },
         MELDINGEN_DETAILS(state, payload){
             state.melDetails = payload
-
-            console.log(state.melDetails)
         }
     },
     actions:{
@@ -38,9 +36,9 @@ export const meldingenStore = {
             axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/`+id)
                 .then(response=>{
                     commit('MELDINGEN_DETAILS',response.data)
-                    setTimeout(()=>{
+                    
                         commit('CHANGE_LOADING',false);
-                    },1000)
+                    
                 })
                 .catch(error=>{
                     console.log(error)

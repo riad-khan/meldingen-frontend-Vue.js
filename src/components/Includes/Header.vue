@@ -4,7 +4,7 @@
     <div id="mobileSidenav" class="sidenav">
       <div class="sidenav-header">
         <div class="logo">
-          <h1><a href="index.php"><img src="../../assets/img/logo.svg" alt="" /></a></h1>
+          <h1><router-link to="/"><img src="../../assets/img/logo.svg" alt="" /></router-link></h1>
         </div>
         <div class="close-sec">
           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img src="img/icon-close.svg"></a>
@@ -39,7 +39,7 @@
         <div class="row d-flex align-items-center">
           <div class="col-md-4 col-xs-8">
             <div class="logo">
-              <h1><a href="index.php"><img src="../../assets/img/logo.svg" alt="" /></a></h1>
+              <h1><router-link to="/"><img src="../../assets/img/logo.svg" alt="" /></router-link></h1>
             </div>
           </div>
           <div class="col-md-8 col-xs-4 textright">

@@ -5,14 +5,17 @@
       <div class="row d-flex align-items-center call-to-row box-shadow bg-white-gray">
         <div class="col-md-8 col-xs-7">
           <div class="location-search-form">
-            <input type="search" v-model="search" @input="(e)=>searchRegion(e)" name="placename"
+            <input type="text" v-model="search" @input="(e)=>searchRegion(e)" name="placename"
               placeholder="Zoek op plaatsnaam" />
           </div>
         </div>
         <div class="col-md-4 col-xs-5">
+
           <div class="call-to-link textright">
-            <button @click.prevent="findMyLocation" class="button text-locator"><span
-                class="icon-search"></span></button>
+            <button @click.prevent="findMyLocation" class="button text-locator">
+            
+              <span :class="isLoading ? 'rolling-spin':'icon-search'"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -45,7 +48,8 @@ export default {
     return {
       isOpen: false,
       meldinges: [],
-      search: ''
+      search: '',
+      isLoading: false,
     }
   },
 
@@ -71,14 +75,18 @@ export default {
 
     },
     searchRegion(e) {
+      this.isLoading = true;
+    
         axios.get(`${process.env.VUE_APP_BACKEND_URL}/meldingen/auto/search?search=${e.target.value}`)
           .then((res) => {
             this.meldinges = [];
             this.meldinges.push(res.data)
+            this.isLoading = false;
           })
           .catch((error) => {
             console.log(error)
-          }) 
+          })
+   
       this.isOpen = true
 
       if (this.search === '') {
