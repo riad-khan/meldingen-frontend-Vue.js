@@ -7,7 +7,7 @@
           <h1><router-link to="/"><img src="../../assets/img/logo.svg" alt="" /></router-link></h1>
         </div>
         <div class="close-sec">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img src="img/icon-close.svg"></a>
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img src="../../assets/img/icon-close.svg"></a>
         </div>
       </div>
       <div class="menu-mobile">
@@ -44,7 +44,7 @@
           </div>
           <div class="col-md-8 col-xs-4 textright">
             <div class="menu">
-              <button class="openNav box-shadow" onclick="openNav()"><img src="img/icon-hamburger.svg"></button>
+              <button class="openNav box-shadow" onclick="openNav()"><img src="../../assets/img/icon-hamburger.svg"></button>
               <ul>
                 <li :class="currentRouteName === 'meldingen' ? 'active':''" ><router-link to="/">Meldingen</router-link></li>
                 <li :class="currentRouteName === 'nieuws' ? 'active':''"><router-link to="/nieuws">Nieuws</router-link></li>

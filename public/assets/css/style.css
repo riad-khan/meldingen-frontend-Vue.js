@@ -221,7 +221,6 @@ button, .button, .button, input[type="button"], input[type="reset"], input[type=
 /* End Toggle Switch*/
 header.header-area {
   padding: 30px 0px;
-  padding-bottom: 70px;
 }
 #mobileSidenav{
     display: none;
@@ -827,11 +826,12 @@ time {
 }
 
 .news-item {
-	padding: 20px;
-	position: relative;
-	display: flex;
-	align-items: center;
-	background: var(--background-color);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--bg-white);
+  margin-bottom: 20px;
 }
 
 .spin{
@@ -890,11 +890,11 @@ time {
 .news-content .action-button:hover {
   background: var(--dark-color);
 }
-.news-ad-sec {
-  background-size: cover;
-  min-height: 100px;
-  background-position: center;
-  text-align: center;
+.news-content p.place {
+  float: right;
+  font-size: 14px;
+  text-align: right;
+  margin-bottom: 0;
 }
 .news-ad-sec .news-content {
   padding-left: 0;
@@ -1012,7 +1012,10 @@ h3.card-heading {
     margin-bottom: 10px;
 }
 .card .news-ad-sec {
-    min-height: 150px;
+  min-height: 150px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .card .news-ad-sec h6.new-ad-heading {
     font-size: 14px;
@@ -1073,7 +1076,7 @@ h3.card-heading {
 }
  .col-md-6 .btn-group .button,
  .col-md-12 .btn-group .button {
-    font-size: 14px;
+    font-size: 18px;
 }
 /*col-12*/
 .col-md-12 .card-content h6 {
@@ -1106,20 +1109,23 @@ span.comment-time {
 /*Contact Us page*/
 .contact-page .grey-bg{
 	height:50px;
-	background-color: var(--lightgrey-color);
+	background-color: var(--theme-color);
 }
 .contact-page {
     padding-top: 0;
 }
 .contact-form {
-    padding: 50px 150px;
+    padding: 50px;
     text-align: center;
     background-image: url(../img/map-contact-page.png);
     background-position: bottom right;
     background-repeat: no-repeat;
     background-size: auto;
-    /*background-color: var(--background-color);*/
     margin-top: -30px;
+}
+.form_area {
+  padding: 30px;
+  border: 1px solid #DFE2E6;
 }
 .contact-box {
     padding: 30px;
@@ -1131,6 +1137,22 @@ span.weblink {
 .single-comment h2 {
     justify-content: space-between;
 }
+
+.my-acc-form.contact-box {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.my-account .btn-group a.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.my-account .btn-submit img {
+  max-width: 22px;
+  margin-right: 5px;
+}
+
+/*end desktop*/
 
 /*Footer*/
 
@@ -1189,7 +1211,7 @@ ul.social li a span[class*="icon-"] {
     font-size: 20px;
 }
 ul.social li a span[class*="icon-"], ul.social li a span[class*="icon-"] .path1:before, ul.social li a span[class*="icon-"] .path2:before {
-	color:var(--bg-red-white);
+	color:var(--theme-color);
   border-radius: 50px;
 }
 ul.social li a span[class*="icon-"] .path2:before {
@@ -1217,6 +1239,34 @@ ul.social.dark-white li a span[class*="icon-"] .path2:before {
 
   color: var(--text-color);
 
+}
+
+ul.social.d-block li {
+  display: block;
+}
+
+ul.social.white-dark li a span[class*="icon-"], ul.social.white-dark li a span[class*="icon-"] .path1:before, ul.social.white-dark li a span[class*="icon-"] .path2:before {
+  color: #ffffff;
+  background: var(--theme-color);
+  font-size: 30px;
+}
+ul.social.white-dark li a {
+  padding: 5px 0px;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+ul.social.white-dark li a span.text {
+  margin-left: 10px;
+}
+
+ul.social.white-dark li a span.icon-Instagram:before {
+  color: #1b425e;
+  background: #fff;
+}
+ul.social.white-dark li a span.icon-Instagram {
+  color: #fff;
 }
 /*
 ul.social.dark-white li a:hover span[class*="icon-"], ul.social.dark-white li a:hover span[class*="icon-"] .path1:before, ul.social.dark-white li a:hover span[class*="icon-"] .path2:before {

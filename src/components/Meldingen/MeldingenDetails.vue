@@ -5,7 +5,6 @@
     <!-- / Step Section-->
     <section class="page-content details-page sec-padding">
       <div class="container">
-
         <div v-if="isLoading === true" style="height: 300px;" :class="isLoading ? 'spin':''"></div>
 
         <div v-else data-aos="fade-up" data-aos-delay="10" data-aos-once="true" class="meldingen_div">

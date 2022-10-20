@@ -2,7 +2,7 @@
   <location urlPath="meldingen" />
   <RegioList region="Nederland" path="meldingen" />
 
-
+<section class="news-archive sec-padding pt-0">
   <div class="container">
     <div class="row">
       <div class="col-md-12 meldingen_div">
@@ -12,8 +12,7 @@
 
 
         <div v-else v-for="(item,i) in meldingens" :key="i">
-          <div data-aos="fade-up" data-aos-delay="10" data-aos-once="true" class="news-item box-shadow border-radius"
-            style="margin: 10px;">
+          <div data-aos="fade-up" data-aos-delay="10" data-aos-once="true" class="news-item box-shadow border-radius">
             <img :class="'news-icon'" :src="require(`@/assets/img/${item.dienst}.png`)">
 
 
@@ -72,6 +71,7 @@
       </div>
     </div>
   </div>
+</section>
 
 
 </template>
@@ -99,12 +99,12 @@ export default {
       keywords:''
     });
     test ="bla bla";
-    axios.get(`${process.env.VUE_APP_BACKEND_URL}/seo-data/Home`)
-      .then((response) => {
-          siteData.title = response.data.title;
-          siteData.description = response.data.seo_meta;
-          siteData.keywords = response.data.seo_keywords;
-      })
+    // axios.get(`${process.env.VUE_APP_BACKEND_URL}/seo-data/Home`)
+    //   .then((response) => {
+    //       siteData.title = response.data.title;
+    //       siteData.description = response.data.seo_meta;
+    //       siteData.keywords = response.data.seo_keywords;
+    //   })
     useHead({
       title: () => test,
       meta: [
